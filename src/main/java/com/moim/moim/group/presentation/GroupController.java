@@ -1,7 +1,7 @@
-package com.moim.moim.controller;
+package com.moim.moim.group.presentation;
 
-import com.moim.moim.domain.Group;
-import com.moim.moim.service.GroupService;
+import com.moim.moim.group.application.GroupService;
+import com.moim.moim.group.dto.GroupDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,6 +10,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/groups")
 public class GroupController {
+
     private final GroupService groupService;
 
     public GroupController(GroupService groupService) {
@@ -17,20 +18,19 @@ public class GroupController {
     }
 
     @PostMapping
-    public Group createGroup(@RequestBody Group group) {
-        return groupService.saveGroup(group);
+    public ResponseEntity<GroupDto> createGroup(@RequestBody GroupDto groupDto) {
+        GroupDto createdGroup = groupService.createGroup(groupDto);
+        return ResponseEntity.ok(createdGroup);
     }
 
     @GetMapping
-    public List<Group> getAllGroups() {
-        return groupService.getAllGroups();
+    public ResponseEntity<List<GroupDto>> getAllGroups() {
+        return ResponseEntity.ok(groupService.getAllGroups());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Group> getGroupById(@PathVariable Long id) {
-        return groupService.getGroupById(id)
-                .map(group -> ResponseEntity.ok(group))
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<GroupDto> getGroupById(@PathVariable Long id) {
+        return ResponseEntity.ok(groupService.getGroupById(id));
     }
 
     @DeleteMapping("/{id}")
@@ -39,4 +39,3 @@ public class GroupController {
         return ResponseEntity.noContent().build();
     }
 }
-
