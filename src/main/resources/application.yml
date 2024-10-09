@@ -1,4 +1,11 @@
 spring:
+  data:
+    redis:
+      host: ${SPRING_REDIS_HOST}
+      port: ${SPRING_REDIS_PORT}
+      repositories:
+        enabled: false
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: ${SPRING_DATABASE_USERNAME}
@@ -13,3 +20,9 @@ spring:
         show_sql: 'true'
     hibernate:
       ddl-auto: update
+
+
+
+coolsms:
+  apiKey: ${COOLSMS_API_KEY}
+  apiSecret: ${COOLSMS_API_SECRET}
